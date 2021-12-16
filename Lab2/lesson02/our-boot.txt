@@ -1,0 +1,89 @@
+2c2
+< build/boot_s.o:     file format elf64-littleaarch64
+---
+> no-flag-build/boot_s.o:     file format elf64-littleaarch64
+17c17
+<   14:	580003a0 	ldr	x0, 88 <el1_entry+0x10>
+---
+>   14:	58000320 	ldr	x0, 78 <el1_entry+0xc>
+19c19
+<   1c:	580003a0 	ldr	x0, 90 <el1_entry+0x18>
+---
+>   1c:	58000320 	ldr	x0, 80 <el1_entry+0x14>
+21c21
+<   24:	580003a0 	ldr	x0, 98 <el1_entry+0x20>
+---
+>   24:	58000320 	ldr	x0, 88 <el1_entry+0x1c>
+23c23
+<   2c:	580003a0 	ldr	x0, a0 <el1_entry+0x28>
+---
+>   2c:	58000320 	ldr	x0, 90 <el1_entry+0x24>
+25c25
+<   34:	100000c0 	adr	x0, 4c <el2_entry>
+---
+>   34:	10000060 	adr	x0, 40 <el2_entry>
+27,50c27,50
+<   3c:	d5181040 	msr	cpacr_el1, x0
+<   40:	58000340 	ldr	x0, a8 <el1_entry+0x30>
+<   44:	d5181040 	msr	cpacr_el1, x0
+<   48:	d69f03e0 	eret
+< 
+< 000000000000004c <el2_entry>:
+<   4c:	10000000 	adr	x0, 0 <bss_begin>
+<   50:	10000001 	adr	x1, 0 <bss_end>
+<   54:	cb000021 	sub	x1, x1, x0
+<   58:	94000000 	bl	0 <memzero>
+<   5c:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+<   60:	94000000 	bl	0 <two>
+<   64:	58000260 	ldr	x0, b0 <el1_entry+0x38>
+<   68:	d51c4000 	msr	spsr_el2, x0
+<   6c:	10000060 	adr	x0, 78 <el1_entry>
+<   70:	d51c4020 	msr	elr_el2, x0
+<   74:	d69f03e0 	eret
+< 
+< 0000000000000078 <el1_entry>:
+<   78:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+<   7c:	94000000 	bl	0 <one>
+<   80:	17ffffe4 	b	10 <proc_hang>
+<   84:	00000000 	.inst	0x00000000 ; undefined
+<   88:	30d00800 	.word	0x30d00800
+---
+>   3c:	d69f03e0 	eret
+> 
+> 0000000000000040 <el2_entry>:
+>   40:	10000000 	adr	x0, 0 <bss_begin>
+>   44:	10000001 	adr	x1, 0 <bss_end>
+>   48:	cb000021 	sub	x1, x1, x0
+>   4c:	94000000 	bl	0 <memzero>
+>   50:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+>   54:	94000000 	bl	0 <two>
+>   58:	58000200 	ldr	x0, 98 <el1_entry+0x2c>
+>   5c:	d51c4000 	msr	spsr_el2, x0
+>   60:	10000060 	adr	x0, 6c <el1_entry>
+>   64:	d51c4020 	msr	elr_el2, x0
+>   68:	d69f03e0 	eret
+> 
+> 000000000000006c <el1_entry>:
+>   6c:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+>   70:	94000000 	bl	0 <one>
+>   74:	17ffffe7 	b	10 <proc_hang>
+>   78:	30d00800 	.word	0x30d00800
+>   7c:	00000000 	.word	0x00000000
+>   80:	80000000 	.word	0x80000000
+>   84:	00000000 	.word	0x00000000
+>   88:	00000431 	.word	0x00000431
+52c52
+<   90:	80000000 	.word	0x80000000
+---
+>   90:	000001c9 	.word	0x000001c9
+54c54
+<   98:	00000431 	.word	0x00000431
+---
+>   98:	000001c5 	.word	0x000001c5
+56,61d55
+<   a0:	000001c9 	.word	0x000001c9
+<   a4:	00000000 	.word	0x00000000
+<   a8:	00300000 	.word	0x00300000
+<   ac:	00000000 	.word	0x00000000
+<   b0:	000001c5 	.word	0x000001c5
+<   b4:	00000000 	.word	0x00000000

@@ -1,0 +1,55 @@
+
+no-flag-build/boot_s.o:     file format elf64-littleaarch64
+
+
+Disassembly of section .text.boot:
+
+0000000000000000 <_start>:
+   0:	d53800a0 	mrs	x0, mpidr_el1
+   4:	92401c00 	and	x0, x0, #0xff
+   8:	b4000060 	cbz	x0, 14 <master>
+   c:	14000001 	b	10 <proc_hang>
+
+0000000000000010 <proc_hang>:
+  10:	14000000 	b	10 <proc_hang>
+
+0000000000000014 <master>:
+  14:	58000320 	ldr	x0, 78 <el1_entry+0xc>
+  18:	d5181000 	msr	sctlr_el1, x0
+  1c:	58000320 	ldr	x0, 80 <el1_entry+0x14>
+  20:	d51c1100 	msr	hcr_el2, x0
+  24:	58000320 	ldr	x0, 88 <el1_entry+0x1c>
+  28:	d51e1100 	msr	scr_el3, x0
+  2c:	58000320 	ldr	x0, 90 <el1_entry+0x24>
+  30:	d51e4000 	msr	spsr_el3, x0
+  34:	10000060 	adr	x0, 40 <el2_entry>
+  38:	d51e4020 	msr	elr_el3, x0
+  3c:	d69f03e0 	eret
+
+0000000000000040 <el2_entry>:
+  40:	10000000 	adr	x0, 0 <bss_begin>
+  44:	10000001 	adr	x1, 0 <bss_end>
+  48:	cb000021 	sub	x1, x1, x0
+  4c:	94000000 	bl	0 <memzero>
+  50:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+  54:	94000000 	bl	0 <two>
+  58:	58000200 	ldr	x0, 98 <el1_entry+0x2c>
+  5c:	d51c4000 	msr	spsr_el2, x0
+  60:	10000060 	adr	x0, 6c <el1_entry>
+  64:	d51c4020 	msr	elr_el2, x0
+  68:	d69f03e0 	eret
+
+000000000000006c <el1_entry>:
+  6c:	b26a03ff 	mov	sp, #0x400000              	// #4194304
+  70:	94000000 	bl	0 <one>
+  74:	17ffffe7 	b	10 <proc_hang>
+  78:	30d00800 	.word	0x30d00800
+  7c:	00000000 	.word	0x00000000
+  80:	80000000 	.word	0x80000000
+  84:	00000000 	.word	0x00000000
+  88:	00000431 	.word	0x00000431
+  8c:	00000000 	.word	0x00000000
+  90:	000001c9 	.word	0x000001c9
+  94:	00000000 	.word	0x00000000
+  98:	000001c5 	.word	0x000001c5
+  9c:	00000000 	.word	0x00000000
